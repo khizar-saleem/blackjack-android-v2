@@ -15,6 +15,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import edu.cnm.deepdive.blackjack.R;
 import edu.cnm.deepdive.blackjack.model.pojo.HandWithCards;
 import edu.cnm.deepdive.blackjack.view.CardRecyclerAdapter;
+import edu.cnm.deepdive.blackjack.view.CardRecyclerAdapter.OverlapDecoration;
 import edu.cnm.deepdive.blackjack.viewmodel.MainViewModel;
 
 public abstract class HandFragment extends Fragment {
@@ -33,8 +34,11 @@ public abstract class HandFragment extends Fragment {
       Bundle savedInstanceState) {
     View view = inflater.inflate(getLayout(), container, false);
     cards = view.findViewById(R.id.cards);
-    // TODO Add support for overlapping
-    cards.setLayoutManager(new LinearLayoutManager(getContext()));
+    cards.addItemDecoration(
+        new OverlapDecoration(0,
+            (int) getContext().getResources().getDimension(R.dimen.card_overlap)));
+    cards.setLayoutManager(
+        new LinearLayoutManager(getContext(), RecyclerView.HORIZONTAL, false));
     bustedValue = view.findViewById(R.id.busted_value);
     hardValue = view.findViewById(R.id.hard_value);
     hardSoftDivider = view.findViewById(R.id.hard_soft_divider);
